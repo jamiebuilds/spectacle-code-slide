@@ -3,13 +3,13 @@ const {PropTypes} = React;
 
 const {Slide} = require('spectacle');
 const CodeSlideTitle = require('./CodeSlideTitle');
-const CodeSlideCode = require('./CodeSlideCode');
 const CodeSlideNote = require('./CodeSlideNote');
 
 const clamp = require('lodash.clamp');
 const padStart = require('lodash.padstart');
 const getHighlightedCodeLines = require('./getHighlightedCodeLines');
-const calculateScrollCenter = reuqire('./calculateScrollCenter');
+const calculateScrollCenter = require('./calculateScrollCenter');
+const scrollToElement = require('./scrollToElement');
 
 function startOrEnd(index, loc) {
   if (index === loc[0]) {
@@ -29,14 +29,24 @@ function getLineNumber(index) {
   return '<span class="token comment">' + padStart(index + 1, 3) + '.</span> ';
 }
 
+const style = {
+  position: 'relative',
+  textAlign: 'left',
+  overflow: 'auto',
+  color: 'white',
+  height: '646px',
+  margin: 0,
+  padding: '40% 0'
+};
+
 class CodeSlide extends React.Component {
   static propTypes = {
     lang: PropTypes.string.isRequired,
     code: PropTypes.string.isRequired,
     ranges: PropTypes.arrayOf(PropTypes.shape({
       loc: PropTypes.arrayOf(PropTypes.number).isRequired,
-      title: PropTypes.string,
-      note: PropTypes.string
+      title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+      note: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
     }))
   };
 
@@ -93,7 +103,11 @@ class CodeSlide extends React.Component {
     return (
       <Slide {...rest} bgColor="#122b45" margin={1}>
         {range.title && <CodeSlideTitle>{range.title}</CodeSlideTitle>}
-        <CodeSlideCode ref="container" code={code} lang={lang} ranges={ranges}/>
+
+        <pre ref="container" style={style}>
+          <code>{lines}</code>
+        </pre>
+
         {range.note && <CodeSlideNote>{range.note}</CodeSlideNote>}
       </Slide>
     );
