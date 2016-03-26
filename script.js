@@ -17,7 +17,7 @@ class Presentation extends React.Component {
       <Spectacle theme={theme}>
         <Deck transition={[]} transitionDuration={0} progress="bar">
           <CodeSlide transition={[]} lang="js" code={code} ranges={[
-            { loc: [ 0, 28], title: 'spectacle-code-slide' },
+            { loc: [ 0, 28], title: 'spectacle-code-slide', note: 'Navigate with your up and down arrow keys' },
             { loc: [ 0,  1], note: 'Import the module' },
             { loc: [ 2,  7], note: 'Setup your presentation' },
             { loc: [ 8, 22], note: 'Time to create your first CodeSlide' },
@@ -28,7 +28,9 @@ class Presentation extends React.Component {
             { loc: [15, 16], note: 'Each one has a "loc" property with a start and an end.' },
             { loc: [13, 14], title: 'You can also add a "title"' },
             { loc: [16, 17], note: 'Or even a "note"' },
-            { loc: [ 0, 28], title: 'That\'s all folks!' },
+            { loc: [ 0, 28], title: 'That\'s all folks!', note: (
+              <span>Git repo here: <a href="https://github.com/thejameskyle/spectacle-code-slide">thejameskyle/spectacle-code-slide</a></span>
+            ) },
           ]}/>
         </Deck>
       </Spectacle>

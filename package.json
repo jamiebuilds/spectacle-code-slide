@@ -19,6 +19,6 @@
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "spectacle": "^1.0.4",
-    "spectacle-code-slide": "^0.1.1"
+    "spectacle-code-slide": "^0.1.2"
   }
 }
