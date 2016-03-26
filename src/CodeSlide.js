@@ -64,7 +64,7 @@ class CodeSlide extends React.Component {
 
   onKeyDown = e => {
     let prev = this.state.active;
-    let active;
+    let active = null;
 
     if (e.which === 38) {
       active = prev - 1;
@@ -72,9 +72,9 @@ class CodeSlide extends React.Component {
       active = prev + 1;
     }
 
-    if (active) {
+    if (active !== null) {
       e.preventDefault();
-      active = clamp(active, 0, this.props.ranges.length);
+      active = clamp(active, 0, this.props.ranges.length - 1);
       this.setState({ active }, this.scrollIntoView);
     }
   };
