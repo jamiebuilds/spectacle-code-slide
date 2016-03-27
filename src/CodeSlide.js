@@ -65,9 +65,11 @@ class CodeSlide extends React.Component {
     document.removeEventListener('keydown', this.onKeyDown);
   }
 
-  goTo(active) {
+  goTo(active, skipLocalStorage) {
     this.setState({ active }, this.scrollActiveIntoView);
-    localStorage.setItem('active', active);
+    if (!skipLocalStorage) {
+      localStorage.setItem('active', active);
+    }
   }
 
   scrollActiveIntoView = () => {
@@ -95,7 +97,7 @@ class CodeSlide extends React.Component {
 
   onStorage = e => {
     if (e.key === 'active') {
-      this.goTo(e.newValue);
+      this.goTo(e.newValue, true);
     }
   };
 
