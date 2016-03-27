@@ -17,18 +17,18 @@ class Presentation extends React.Component {
       <Spectacle theme={theme}>
         <Deck transition={[]} transitionDuration={0} progress="bar">
           <CodeSlide transition={[]} lang="js" code={code} ranges={[
-            { loc: [ 0, 28], title: 'spectacle-code-slide', note: 'Navigate with your up and down arrow keys' },
+            { loc: [ 0, 31], title: 'spectacle-code-slide', note: 'Navigate with your up and down arrow keys' },
             { loc: [ 0,  1], note: 'Import the module' },
-            { loc: [ 2,  7], note: 'Setup your presentation' },
-            { loc: [ 8, 22], note: 'Time to create your first CodeSlide' },
-            { loc: [ 9, 10], note: 'Props like "transition" get passed through to Slide' },
-            { loc: [10, 11], note: 'Specify a "lang"' },
-            { loc: [11, 12], note: 'Pass in your code as a string' },
-            { loc: [12, 22], note: 'Now to specify some ranges. They are an array of objects' },
-            { loc: [15, 16], note: 'Each one has a "loc" property with a start and an end.' },
-            { loc: [13, 14], title: 'You can also add a "title"' },
-            { loc: [16, 17], note: 'Or even a "note"' },
-            { loc: [ 0, 28], title: 'That\'s all folks!', note: (
+            { loc: [ 2,  9], note: 'Setup your presentation' },
+            { loc: [10, 26], note: 'Time to create your first CodeSlide' },
+            { loc: [11, 12], note: 'Props like "transition" get passed through to Slide' },
+            { loc: [12, 13], note: 'Specify a "lang"' },
+            { loc: [13, 14], note: 'Pass in your code as a string' },
+            { loc: [14, 26], note: 'Now to specify some ranges. They are an array of objects' },
+            { loc: [18, 19], note: 'Each one has a "loc" property with a start and an end.' },
+            { loc: [16, 17], title: 'You can also add a "title"' },
+            { loc: [20, 21], note: 'Or even a "note"' },
+            { loc: [ 0, 31], title: 'That\'s all folks!', note: (
               <span>Git repo here: <a href="https://github.com/thejameskyle/spectacle-code-slide">thejameskyle/spectacle-code-slide</a></span>
             ) },
           ]}/>
