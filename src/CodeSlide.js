@@ -74,11 +74,11 @@ class CodeSlide extends React.Component {
   }
 
   getStorageItem() {
-    return localStorage.getItem(this.getStorageId());
+    return +localStorage.getItem(this.getStorageId());
   }
 
   setStorageItem(value) {
-    return localStorage.setItem(this.getStorageId(), value);
+    return localStorage.setItem(this.getStorageId(), '' + value);
   }
 
   goTo(active, skipLocalStorage) {
@@ -113,7 +113,7 @@ class CodeSlide extends React.Component {
 
   onStorage = e => {
     if (e.key === this.getStorageId()) {
-      this.goTo(e.newValue, true);
+      this.goTo(+e.newValue, true);
     }
   };
 
