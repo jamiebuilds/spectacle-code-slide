@@ -56,11 +56,23 @@ class CodeSlide extends React.Component {
 
   componentDidMount() {
     document.addEventListener('keydown', this.onKeyDown);
+    window.addEventListener('storage', this.onStorage);
   }
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.onKeyDown);
   }
+
+  goTo(active) {
+    this.setState({ active }, this.scrollActiveIntoView);
+    localStorage.setItem('active', active);
+  }
+
+  scrollActiveIntoView = () => {
+    const {container, start, end} = this.refs;
+    const scrollTo = calculateScrollCenter(start, end, container);
+    scrollToElement(container, 0, scrollTo);
+  };
 
   onKeyDown = e => {
     let prev = this.state.active;
@@ -75,14 +87,14 @@ class CodeSlide extends React.Component {
     if (active !== null) {
       e.preventDefault();
       active = clamp(active, 0, this.props.ranges.length - 1);
-      this.setState({ active }, this.scrollIntoView);
+      this.goTo(active);
     }
   };
 
-  scrollIntoView = () => {
-    const {container, start, end} = this.refs;
-    const scrollTo = calculateScrollCenter(start, end, container);
-    scrollToElement(container, 0, scrollTo);
+  onStorage = e => {
+    if (e.key === 'active') {
+      this.goTo(e.newValue);
+    }
   };
 
   render() {
