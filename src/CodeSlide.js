@@ -32,11 +32,13 @@ function getLineNumber(index) {
 const style = {
   position: 'relative',
   textAlign: 'left',
-  overflow: 'auto',
+  overflow: 'hidden',
   color: 'white',
   height: '646px',
   margin: 0,
-  padding: '40% 0'
+  padding: '40% 0',
+  whiteSpace: 'pre-wrap',
+  wordBreak: 'break-word'
 };
 
 class CodeSlide extends React.Component {
