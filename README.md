@@ -4,6 +4,8 @@ Present code with style.
 
 <img src="demo.gif" width="400"/>
 
+> _Dude, you just changed the code presentation game_ – @kenwheeler
+
 ## Install
 
 ```
