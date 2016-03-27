@@ -53,14 +53,14 @@ class CodeSlide extends React.Component {
   };
 
   state = {
-    active: 0
+    active: this.getStorageItem() || 0
   };
 
   componentDidMount() {
     document.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('storage', this.onStorage);
     window.addEventListener('resize', this.scrollActiveIntoView);
-    this.setActiveFromStorage();
+    this.scrollActiveIntoView();
   }
 
   componentWillUnmount() {
@@ -69,17 +69,22 @@ class CodeSlide extends React.Component {
     window.removeEventListener('resize', this.scrollActiveIntoView);
   }
 
-  setActiveFromStorage() {
-    const active = localStorage.getItem('active');
-    if (active) {
-      this.goTo(active, true);
-    }
+  getStorageId() {
+    return 'code-slide:' + this.props.slideIndex;
+  }
+
+  getStorageItem() {
+    return localStorage.getItem(this.getStorageId());
+  }
+
+  setStorageItem(value) {
+    return localStorage.setItem(this.getStorageId(), value);
   }
 
   goTo(active, skipLocalStorage) {
     this.setState({ active }, this.scrollActiveIntoView);
     if (!skipLocalStorage) {
-      localStorage.setItem('active', active);
+      this.setStorageItem(active);
     }
   }
 
@@ -107,7 +112,7 @@ class CodeSlide extends React.Component {
   };
 
   onStorage = e => {
-    if (e.key === 'active') {
+    if (e.key === this.getStorageId()) {
       this.goTo(e.newValue, true);
     }
   };
