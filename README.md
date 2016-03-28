@@ -1,4 +1,4 @@
-# spectacle-code-slide
+# [spectacle](http://stack.formidable.com/spectacle)-code-slide
 
 Present code with style.
 
