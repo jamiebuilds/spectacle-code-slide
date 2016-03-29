@@ -133,7 +133,7 @@ class CodeSlide extends React.Component {
     });
 
     return (
-      <Slide {...rest} bgColor="#122b45" margin={1}>
+      <Slide bgColor="#122b45" margin={1} {...rest}>
         {range.title && <CodeSlideTitle>{range.title}</CodeSlideTitle>}
 
         <pre ref="container" style={style}>
