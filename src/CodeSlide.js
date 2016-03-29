@@ -124,7 +124,7 @@ class CodeSlide extends React.Component {
   };
 
   render() {
-    const {code, lang, ranges, ...rest} = this.props;
+    const {code, lang, ranges, notes, ...rest} = this.props;
     const {active} = this.state;
 
     const range = ranges[active] || {};
@@ -139,7 +139,7 @@ class CodeSlide extends React.Component {
     });
 
     return (
-      <Slide {...rest} bgColor="#122b45" margin={1}>
+      <Slide {...rest} notes={range.notes || notes} bgColor="#122b45" margin={1}>
         {range.title && <CodeSlideTitle>{range.title}</CodeSlideTitle>}
 
         <pre ref="container" style={style}>
