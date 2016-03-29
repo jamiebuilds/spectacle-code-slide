@@ -1,6 +1,6 @@
 # [spectacle](http://stack.formidable.com/spectacle)-code-slide
 
-Present code with style.
+Present code with style using [spectacle](https://github.com/FormidableLabs/spectacle).
 
 <img src="demo.gif" width="400"/>
 
@@ -9,12 +9,15 @@ Present code with style.
 ## Install
 
 ```
+$ npm install --save spectacle
 $ npm install --save spectacle-code-slide
 ```
 
 ## Usage
 
 ```js
+import React from 'react';
+import { Spectacle, Deck } from 'spectacle';
 import CodeSlide from 'spectacle-code-slide';
 
 export default class Presentation extends React.Component {
