@@ -61,6 +61,10 @@ class CodeSlide extends React.Component {
     window.addEventListener('storage', this.onStorage);
     window.addEventListener('resize', this.onResize);
     this.scrollActiveIntoView(true);
+
+    requestAnimationFrame(() => {
+      this.scrollActiveIntoView(true);
+    });
   }
 
   componentWillUnmount() {
@@ -101,6 +105,10 @@ class CodeSlide extends React.Component {
   };
 
   onKeyDown = e => {
+    if (this.props.slideIndex !== parseInt(this.props.route.slide)) {
+      return;
+    }
+
     let prev = this.state.active;
     let active = null;
 
