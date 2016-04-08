@@ -47,3 +47,7 @@ export default class Presentation extends React.Component {
   }
 }
 ```
+
+## Syntax Highlighting
+
+Provided by [PrismJS](https://github.com/PrismJS/prism). See http://prismjs.com/ for docs.
