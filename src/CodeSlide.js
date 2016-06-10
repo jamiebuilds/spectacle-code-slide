@@ -105,10 +105,6 @@ class CodeSlide extends React.Component {
   };
 
   onKeyDown = e => {
-    if (this.props.slideIndex !== parseInt(this.props.route.slide)) {
-      return;
-    }
-
     let prev = this.state.active;
     let active = null;
 
