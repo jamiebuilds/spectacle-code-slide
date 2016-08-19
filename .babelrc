@@ -1,4 +1,3 @@
 {
-  "presets": ["es2015", "stage-1", "react"],
-  "plugins": ["react-pure-components"]
+  "presets": ["es2015", "stage-1", "react"]
 }

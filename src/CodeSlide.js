@@ -52,6 +52,10 @@ class CodeSlide extends React.Component {
     }))
   };
 
+  static contextTypes = {
+    store: React.PropTypes.object.isRequired
+  };
+
   state = {
     active: this.getStorageItem() || 0
   };
@@ -105,7 +109,9 @@ class CodeSlide extends React.Component {
   };
 
   onKeyDown = e => {
-    if (this.props.slideIndex !== parseInt(this.props.route.slide)) {
+    const slide = this.context.store.getState().route.slide;
+
+    if (this.props.slideIndex !== parseInt(slide)) {
       return;
     }
 
