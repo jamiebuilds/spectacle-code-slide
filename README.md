@@ -19,6 +19,12 @@ $ npm install --save spectacle-code-slide
 import React from 'react';
 import { Spectacle, Deck } from 'spectacle';
 import CodeSlide from 'spectacle-code-slide';
+import shiaLabeoufMagicGif from "./shiaLabeoufMagic.gif"
+import preloader from "spectacle/lib/utils/preloader";
+
+preloader({
+  shiaLabeoufMagicGif
+});
 
 export default class Presentation extends React.Component {
   render() {
@@ -36,7 +42,7 @@ export default class Presentation extends React.Component {
               { loc: [1, 2] },
               { loc: [1, 2], note: "Heres a note!" },
               { loc: [2, 3] },
-              { loc: [4, 7] },
+              { loc: [4, 7], image: shiaLabeoufMagicGif },
               { loc: [8, 10] },
               // ...
             ]}/>
