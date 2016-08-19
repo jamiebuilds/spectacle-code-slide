@@ -138,11 +138,14 @@ class CodeSlide extends React.Component {
   };
 
   render() {
-    const {code, lang, ranges, ...rest} = this.props;
+    const {code, lang, ranges, color, bgColor, ...rest} = this.props;
     const {active} = this.state;
 
     const range = ranges[active] || {};
     const loc = range.loc || [];
+    const slideBg = bgColor || "#122b45";
+
+    style.color = color || style.color;
 
     const lines = getHighlightedCodeLines(code, lang).map((line, index) => {
       return <div
@@ -153,7 +156,7 @@ class CodeSlide extends React.Component {
     });
 
     return (
-      <Slide bgColor="#122b45" margin={1} {...rest}>
+      <Slide bgColor={slideBg} margin={1} {...rest}>
         {range.title && <CodeSlideTitle>{range.title}</CodeSlideTitle>}
 
         <pre ref="container" style={style}>
