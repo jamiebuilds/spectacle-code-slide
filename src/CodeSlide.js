@@ -29,11 +29,20 @@ function getLineNumber(index) {
   return '<span class="token comment">' + padStart(index + 1, 3) + '.</span> ';
 }
 
+const div = document.createElement("code");
+div.style.display = "none";
+div.className = "language-c";
+document.body.appendChild(div);
+let defaultBgColor = window.getComputedStyle(div).backgroundColor;
+let defaultColor = window.getComputedStyle(div).color;
+defaultColor = defaultColor !== "" ? defaultColor : "white";
+defaultBgColor = defaultBgColor !== "" ? defaultBgColor : "#122b45";
+
 const style = {
   position: 'relative',
   textAlign: 'left',
   overflow: 'hidden',
-  color: 'white',
+  color: defaultColor,
   height: '646px',
   margin: 0,
   padding: '40% 0',
@@ -138,11 +147,14 @@ class CodeSlide extends React.Component {
   };
 
   render() {
-    const {code, lang, ranges, ...rest} = this.props;
+    const {code, lang, ranges, color, bgColor, ...rest} = this.props;
     const {active} = this.state;
 
     const range = ranges[active] || {};
     const loc = range.loc || [];
+    const slideBg = bgColor || defaultBgColor;
+
+    style.color = color || style.color;
 
     const lines = getHighlightedCodeLines(code, lang).map((line, index) => {
       return <div
@@ -153,7 +165,7 @@ class CodeSlide extends React.Component {
     });
 
     return (
-      <Slide bgColor="#122b45" margin={1} {...rest}>
+      <Slide bgColor={slideBg} margin={1} {...rest}>
         {range.title && <CodeSlideTitle>{range.title}</CodeSlideTitle>}
 
         <pre ref="container" style={style}>
