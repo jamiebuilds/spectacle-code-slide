@@ -29,11 +29,20 @@ function getLineNumber(index) {
   return '<span class="token comment">' + padStart(index + 1, 3) + '.</span> ';
 }
 
+const div = document.createElement("code");
+div.style.display = "none";
+div.className = "language-c";
+document.body.appendChild(div);
+let defaultBgColor = window.getComputedStyle(div).backgroundColor;
+let defaultColor = window.getComputedStyle(div).color;
+defaultColor = defaultColor !== "" ? defaultColor : "white";
+defaultBgColor = defaultBgColor !== "" ? defaultBgColor : "#122b45";
+
 const style = {
   position: 'relative',
   textAlign: 'left',
   overflow: 'hidden',
-  color: 'white',
+  color: defaultColor,
   height: '646px',
   margin: 0,
   padding: '40% 0',
@@ -143,7 +152,7 @@ class CodeSlide extends React.Component {
 
     const range = ranges[active] || {};
     const loc = range.loc || [];
-    const slideBg = bgColor || "#122b45";
+    const slideBg = bgColor || defaultBgColor;
 
     style.color = color || style.color;
 
