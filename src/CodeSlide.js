@@ -4,12 +4,14 @@ const {PropTypes} = React;
 const {Slide} = require('spectacle');
 const CodeSlideTitle = require('./CodeSlideTitle');
 const CodeSlideNote = require('./CodeSlideNote');
+const CodeSlideImage = require('./CodeSlideImage');
 
 const clamp = require('lodash.clamp');
 const padStart = require('lodash.padstart');
 const getHighlightedCodeLines = require('./getHighlightedCodeLines');
 const calculateScrollCenter = require('./calculateScrollCenter');
 const scrollToElement = require('./scrollToElement');
+const getComputedCodeStyle = require('./getComputedCodeStyle');
 
 function startOrEnd(index, loc) {
   if (index === loc[0]) {
@@ -29,14 +31,9 @@ function getLineNumber(index) {
   return '<span class="token comment">' + padStart(index + 1, 3) + '.</span> ';
 }
 
-const div = document.createElement("code");
-div.style.display = "none";
-div.className = "language-c";
-document.body.appendChild(div);
-let defaultBgColor = window.getComputedStyle(div).backgroundColor;
-let defaultColor = window.getComputedStyle(div).color;
-defaultColor = defaultColor !== "" ? defaultColor : "white";
-defaultBgColor = defaultBgColor !== "" ? defaultBgColor : "#122b45";
+const computedCodeStyle = getComputedCodeStyle();
+const defaultBgColor = computedCodeStyle.backgroundColor || "#122b45";
+const defaultColor = computedCodeStyle.color || "white";
 
 const style = {
   position: 'relative',
@@ -173,6 +170,8 @@ class CodeSlide extends React.Component {
         </pre>
 
         {range.note && <CodeSlideNote>{range.note}</CodeSlideNote>}
+
+        {range.image && <CodeSlideImage src={range.image}/>}
       </Slide>
     );
   }
