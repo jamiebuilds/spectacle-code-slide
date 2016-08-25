@@ -154,7 +154,10 @@ class CodeSlide extends React.Component {
   };
 
   updateNotes() {
-    if (!this.isSlideActive()) {
+    if (
+      !this.isSlideActive() ||
+      !this.context.updateNotes
+    ) {
       return;
     }
 
