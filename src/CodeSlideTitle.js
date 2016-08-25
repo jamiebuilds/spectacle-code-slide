@@ -9,7 +9,7 @@ const styles = {
   border: '10px solid hotpink',
   fontSize: '2.5em',
   color: 'white',
-  textTransform: 'uppercase',
+  // textTransform: 'uppercase',
   whiteSpace: 'nowrap'
 };
 
