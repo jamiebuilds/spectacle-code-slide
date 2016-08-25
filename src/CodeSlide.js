@@ -59,12 +59,17 @@ class CodeSlide extends React.Component {
   };
 
   static contextTypes = {
-    store: React.PropTypes.object.isRequired
+    store: React.PropTypes.object.isRequired,
+    updateNotes: React.PropTypes.func
   };
 
   state = {
     active: this.getStorageItem() || 0
   };
+
+  componentWillMount() {
+    this.updateNotes();
+  }
 
   componentDidMount() {
     document.addEventListener('keydown', this.onKeyDown);
@@ -95,8 +100,15 @@ class CodeSlide extends React.Component {
     return localStorage.setItem(this.getStorageId(), '' + value);
   }
 
+  isSlideActive() {
+    const slide = this.context.store.getState().route.slide;
+    return this.props.slideIndex === parseInt(slide);
+  }
+
   goTo(active, skipLocalStorage) {
     this.setState({ active }, this.scrollActiveIntoView);
+    this.updateNotes();
+
     if (!skipLocalStorage) {
       this.setStorageItem(active);
     }
@@ -115,9 +127,7 @@ class CodeSlide extends React.Component {
   };
 
   onKeyDown = e => {
-    const slide = this.context.store.getState().route.slide;
-
-    if (this.props.slideIndex !== parseInt(slide)) {
+    if (!this.isSlideActive()) {
       return;
     }
 
@@ -143,8 +153,22 @@ class CodeSlide extends React.Component {
     }
   };
 
+  updateNotes() {
+    if (!this.isSlideActive()) {
+      return;
+    }
+
+    const {ranges, notes} = this.props;
+    const {active} = this.state;
+
+    const range = ranges[active] || {};
+    const rangeNotes = range.notes;
+
+    this.context.updateNotes(rangeNotes || notes);
+  }
+
   render() {
-    const {code, lang, ranges, color, bgColor, ...rest} = this.props;
+    const {code, lang, ranges, color, bgColor, notes, ...rest} = this.props;
     const {active} = this.state;
 
     const range = ranges[active] || {};
