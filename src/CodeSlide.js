@@ -16,7 +16,7 @@ const getComputedCodeStyle = require('./getComputedCodeStyle');
 function startOrEnd(index, loc) {
   if (index === loc[0]) {
     return 'start';
-  } else if (index - 1 === loc[1]) {
+  } else if (index === loc[1]) {
     return 'end';
   } else {
     return null;
