@@ -88,6 +88,18 @@ class CodeSlide extends React.Component {
     window.removeEventListener('resize', this.onResize);
   }
 
+  componentWillEnter(cb) {
+    this.refs.slide.componentWillEnter(cb)
+  }
+
+  componentWillAppear(cb) {
+    this.refs.slide.componentWillAppear(cb)
+  }
+
+  componentWillLeave(cb) {
+    this.refs.slide.componentWillLeave(cb)
+  }
+
   getStorageId() {
     return 'code-slide:' + this.props.slideIndex;
   }
@@ -189,7 +201,7 @@ class CodeSlide extends React.Component {
     });
 
     return (
-      <Slide bgColor={slideBg} margin={1} {...rest}>
+      <Slide ref='slide' bgColor={slideBg} margin={1} {...rest}>
         {range.title && <CodeSlideTitle>{range.title}</CodeSlideTitle>}
 
         <pre ref="container" style={style}>
