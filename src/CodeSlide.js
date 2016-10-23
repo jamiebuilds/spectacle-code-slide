@@ -182,11 +182,9 @@ class CodeSlide extends React.Component {
     this.context.updateNotes(rangeNotes || notes);
   }
 
-  render() {
-    const {code, lang, ranges, color, bgColor, notes, ...rest} = this.props;
-    const {active} = this.state;
+  renderSlide(range, rangeIndex) {
+    const {code, lang, color, bgColor, notes, ...rest} = this.props;
 
-    const range = ranges[active] || {};
     const loc = range.loc || [];
     const slideBg = bgColor || defaultBgColor;
 
@@ -201,7 +199,7 @@ class CodeSlide extends React.Component {
     });
 
     return (
-      <Slide ref='slide' bgColor={slideBg} margin={1} {...rest}>
+      <Slide key={rangeIndex} ref='slide' bgColor={slideBg} margin={1} {...rest}>
         {range.title && <CodeSlideTitle>{range.title}</CodeSlideTitle>}
 
         <pre ref="container" style={style}>
@@ -213,6 +211,17 @@ class CodeSlide extends React.Component {
         {range.image && <CodeSlideImage src={range.image}/>}
       </Slide>
     );
+  }
+
+  render() {
+    const {ranges} = this.props;
+    const {active} = this.state;
+
+    const slides = this.props.export
+      ? ranges.map((range, index) => this.renderSlide(range, index))
+      : this.renderSlide(ranges[active], active);
+
+    return (<div>{slides}</div>);
   }
 }
 
