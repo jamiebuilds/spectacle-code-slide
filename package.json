@@ -28,6 +28,6 @@
     "babel-preset-stage-1": "^6.11.4",
     "react": "^0.14.0 || ^15.0.0",
     "react-dom": "^0.14.0 || ^15.0.0",
-    "spectacle": "^1.2.0"
+    "spectacle": "^1.2.5"
   }
 }
