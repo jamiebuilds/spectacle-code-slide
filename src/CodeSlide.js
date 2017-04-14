@@ -100,6 +100,18 @@ class CodeSlide extends React.Component {
     this.refs.slide.componentWillLeave(cb)
   }
 
+  routerCallback(cb) {
+    this.refs.slide.routerCallback(cb)
+  }
+
+  transitionDirection(cb) {
+    this.refs.slide.transitionDirection(cb)
+  }
+
+  getTransitionStyles(cb) {
+    this.refs.slide.getTransitionStyles(cb)
+  }
+
   getStorageId() {
     return 'code-slide:' + this.props.slideIndex;
   }
