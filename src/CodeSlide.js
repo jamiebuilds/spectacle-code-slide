@@ -37,7 +37,7 @@ const defaultColor = computedCodeStyle.color || "white";
 
 const style = {
   position: 'relative',
-  textAlign: 'left',
+  textAlign: 'center',
   overflow: 'hidden',
   color: defaultColor,
   height: '646px',
@@ -55,7 +55,12 @@ class CodeSlide extends React.Component {
       loc: PropTypes.arrayOf(PropTypes.number).isRequired,
       title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
       note: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
-    }))
+    })),
+    showLineNumbers: PropTypes.bool
+  };
+
+  static defaultProps = {
+    showLineNumbers: true
   };
 
   static contextTypes = {
@@ -183,7 +188,7 @@ class CodeSlide extends React.Component {
   }
 
   render() {
-    const {code, lang, ranges, color, bgColor, notes, ...rest} = this.props;
+    const {code, lang, ranges, color, bgColor, notes, showLineNumbers, ...rest} = this.props;
     const {active} = this.state;
 
     const range = ranges[active] || {};
@@ -196,7 +201,11 @@ class CodeSlide extends React.Component {
       return <div
         key={index}
         ref={startOrEnd(index, loc)}
-        dangerouslySetInnerHTML={{ __html: getLineNumber(index) + line }}
+        dangerouslySetInnerHTML={{
+          __html: showLineNumbers
+            ? getLineNumber(index) + line
+            : line
+        }}
         style={{ opacity: calculateOpacity(index, loc) }}/>;
     });
 
@@ -205,7 +214,7 @@ class CodeSlide extends React.Component {
         {range.title && <CodeSlideTitle>{range.title}</CodeSlideTitle>}
 
         <pre ref="container" style={style}>
-          <code>{lines}</code>
+          <code style={{ display: "inline-block", textAlign: "left" }}>{lines}</code>
         </pre>
 
         {range.note && <CodeSlideNote>{range.note}</CodeSlideNote>}
