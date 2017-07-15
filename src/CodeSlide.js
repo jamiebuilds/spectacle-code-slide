@@ -188,7 +188,7 @@ class CodeSlide extends React.Component {
   }
 
   render() {
-    const {code, lang, ranges, color, bgColor, notes, showLineNumbers, ...rest} = this.props;
+    const {code, lang, ranges, color, bgColor, notes, showLineNumbers, width, ...rest} = this.props;
     const {active} = this.state;
 
     const range = ranges[active] || {};
@@ -196,6 +196,7 @@ class CodeSlide extends React.Component {
     const slideBg = bgColor || defaultBgColor;
 
     style.color = color || style.color;
+    if (width) style.width = width;
 
     const lines = getHighlightedCodeLines(code, lang).map((line, index) => {
       return <div
