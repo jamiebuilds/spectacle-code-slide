@@ -1,23 +1,20 @@
 const React = require('react');
 
 const style = {
-  position: 'fixed',
+  position: 'absolute',
   bottom: '20px',
-  width: '100%',
+  width: '75%',
   padding: '20px',
+  margin: '20px 12.5%',
   background: 'black',
   color: 'white',
   fontFamily: 'monospace',
-  textAlign: 'left'
+  textAlign: 'left',
 };
 
 class CodeSlideNote extends React.Component {
   render() {
-    return (
-      <div style={style}>
-        {this.props.children}
-      </div>
-    );
+    return <div style={style}>{this.props.children}</div>;
   }
 }
 

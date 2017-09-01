@@ -1,7 +1,6 @@
 const React = require('react');
-const {PropTypes} = React;
+const { PropTypes } = React;
 
-const {Slide} = require('spectacle');
 const CodeSlideTitle = require('./CodeSlideTitle');
 const CodeSlideNote = require('./CodeSlideNote');
 const CodeSlideImage = require('./CodeSlideImage');
@@ -12,6 +11,15 @@ const getHighlightedCodeLines = require('./getHighlightedCodeLines');
 const calculateScrollCenter = require('./calculateScrollCenter');
 const scrollToElement = require('./scrollToElement');
 const getComputedCodeStyle = require('./getComputedCodeStyle');
+
+const codeSlideStyle = {
+  backgroundColor: '#122b45',
+  position: 'relative',
+  width: '100vw',
+  height: '100vh',
+  fontSize: '2.25rem',
+  overflow: 'hidden',
+};
 
 function startOrEnd(index, loc) {
   if (index === loc[0]) {
@@ -24,7 +32,7 @@ function startOrEnd(index, loc) {
 }
 
 function calculateOpacity(index, loc) {
-  return (loc[0] <= index && loc[1] > index) ? 1 : 0.2;
+  return loc[0] <= index && loc[1] > index ? 1 : 0.2;
 }
 
 function getLineNumber(index) {
@@ -32,8 +40,8 @@ function getLineNumber(index) {
 }
 
 const computedCodeStyle = getComputedCodeStyle();
-const defaultBgColor = computedCodeStyle.backgroundColor || "#122b45";
-const defaultColor = computedCodeStyle.color || "white";
+const defaultBgColor = computedCodeStyle.backgroundColor || '#122b45';
+const defaultColor = computedCodeStyle.color || 'white';
 
 const style = {
   position: 'relative',
@@ -44,32 +52,30 @@ const style = {
   margin: 0,
   padding: '40% 0',
   whiteSpace: 'pre-wrap',
-  wordBreak: 'break-word'
+  wordBreak: 'break-word',
 };
 
 class CodeSlide extends React.Component {
   static propTypes = {
     lang: PropTypes.string.isRequired,
     code: PropTypes.string.isRequired,
-    ranges: PropTypes.arrayOf(PropTypes.shape({
-      loc: PropTypes.arrayOf(PropTypes.number).isRequired,
-      title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-      note: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
-    })),
-    showLineNumbers: PropTypes.bool
+    style: PropTypes.obj,
+    ranges: PropTypes.arrayOf(
+      PropTypes.shape({
+        loc: PropTypes.arrayOf(PropTypes.number).isRequired,
+        title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+        note: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+      }),
+    ),
+    showLineNumbers: PropTypes.bool,
   };
 
   static defaultProps = {
-    showLineNumbers: true
-  };
-
-  static contextTypes = {
-    store: React.PropTypes.object.isRequired,
-    updateNotes: React.PropTypes.func
+    showLineNumbers: true,
   };
 
   state = {
-    active: this.getStorageItem() || 0
+    active: this.getStorageItem() || 0,
   };
 
   componentWillMount() {
@@ -93,18 +99,6 @@ class CodeSlide extends React.Component {
     window.removeEventListener('resize', this.onResize);
   }
 
-  componentWillEnter(cb) {
-    this.refs.slide.componentWillEnter(cb)
-  }
-
-  componentWillAppear(cb) {
-    this.refs.slide.componentWillAppear(cb)
-  }
-
-  componentWillLeave(cb) {
-    this.refs.slide.componentWillLeave(cb)
-  }
-
   getStorageId() {
     return 'code-slide:' + this.props.slideIndex;
   }
@@ -118,8 +112,7 @@ class CodeSlide extends React.Component {
   }
 
   isSlideActive() {
-    const slide = this.context.store.getState().route.slide;
-    return this.props.slideIndex === parseInt(slide);
+    return this.props.index === 6;
   }
 
   goTo(active, skipLocalStorage) {
@@ -131,11 +124,11 @@ class CodeSlide extends React.Component {
     }
   }
 
-  scrollActiveIntoView = (skipAnimation) => {
-    const {container, start, end} = this.refs;
+  scrollActiveIntoView = skipAnimation => {
+    const { container, start, end } = this.refs;
     const scrollTo = calculateScrollCenter(start, end, container);
     scrollToElement(container, 0, scrollTo, {
-      duration: skipAnimation ? 1 : 1000
+      duration: skipAnimation ? 1 : 1000,
     });
   };
 
@@ -171,25 +164,29 @@ class CodeSlide extends React.Component {
   };
 
   updateNotes() {
-    if (
-      !this.isSlideActive() ||
-      !this.context.updateNotes
-    ) {
+    if (!this.isSlideActive()) {
       return;
     }
 
-    const {ranges, notes} = this.props;
-    const {active} = this.state;
+    const { ranges, notes } = this.props;
+    const { active } = this.state;
 
     const range = ranges[active] || {};
     const rangeNotes = range.notes;
-
-    this.context.updateNotes(rangeNotes || notes);
   }
 
   render() {
-    const {code, lang, ranges, color, bgColor, notes, showLineNumbers, ...rest} = this.props;
-    const {active} = this.state;
+    const {
+      code,
+      lang,
+      ranges,
+      color,
+      bgColor,
+      notes,
+      showLineNumbers,
+      ...rest
+    } = this.props;
+    const { active } = this.state;
 
     const range = ranges[active] || {};
     const loc = range.loc || [];
@@ -198,29 +195,37 @@ class CodeSlide extends React.Component {
     style.color = color || style.color;
 
     const lines = getHighlightedCodeLines(code, lang).map((line, index) => {
-      return <div
-        key={index}
-        ref={startOrEnd(index, loc)}
-        dangerouslySetInnerHTML={{
-          __html: showLineNumbers
-            ? getLineNumber(index) + line
-            : line
-        }}
-        style={{ opacity: calculateOpacity(index, loc) }}/>;
+      return (
+        <div
+          key={index}
+          ref={startOrEnd(index, loc)}
+          dangerouslySetInnerHTML={{
+            __html: showLineNumbers ? getLineNumber(index) + line : line,
+          }}
+          style={{ opacity: calculateOpacity(index, loc) }}
+        />
+      );
     });
 
     return (
-      <Slide ref='slide' bgColor={slideBg} margin={1} {...rest}>
+      <div style={this.props.style || codeSlideStyle}>
         {range.title && <CodeSlideTitle>{range.title}</CodeSlideTitle>}
 
         <pre ref="container" style={style}>
-          <code style={{ display: "inline-block", textAlign: "left" }}>{lines}</code>
+          <code
+            style={{
+              display: 'inline-block',
+              textAlign: 'left',
+            }}
+          >
+            {lines}
+          </code>
         </pre>
 
         {range.note && <CodeSlideNote>{range.note}</CodeSlideNote>}
 
-        {range.image && <CodeSlideImage src={range.image}/>}
-      </Slide>
+        {range.image && <CodeSlideImage src={range.image} />}
+      </div>
     );
   }
 }
