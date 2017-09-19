@@ -1,11 +1,11 @@
 const memoize = require('lodash.memoize');
+const Prism = require('prismjs')
+const requireDir = require('require-dir');
+
+requireDir('prismjs/components/')
 
 function highlightCode(code, lang) {
-  if (window.Prism) {
-    return window.Prism.highlight(code, window.Prism.languages[lang])
-  } else {
-    return code;
-  }
+  return Prism.highlight(code, Prism.languages[lang])
 }
 
 function getHighlightedCodeLines(code, lang) {
