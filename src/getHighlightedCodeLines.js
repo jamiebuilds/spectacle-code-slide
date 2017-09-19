@@ -1,5 +1,6 @@
 const memoize = require('lodash.memoize');
 const Prism = require('prismjs')
+const requireDir = require('require-dir');
 
 requireDir('prismjs/components/')
 
