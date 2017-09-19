@@ -1,6 +1,8 @@
 const memoize = require('lodash.memoize');
 const Prism = require('prismjs')
 
+requireDir('prismjs/components/')
+
 function highlightCode(code, lang) {
   return Prism.highlight(code, Prism.languages[lang])
 }
