@@ -15,7 +15,8 @@
     "component-tween": "^1.2.0",
     "lodash.clamp": "^4.0.1",
     "lodash.memoize": "^4.0.1",
-    "lodash.padstart": "^4.2.0"
+    "lodash.padstart": "^4.2.0",
+    "prismjs": "^1.8.1"
   },
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0",
