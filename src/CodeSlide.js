@@ -1,5 +1,5 @@
 const React = require('react');
-const {PropTypes} = React;
+const PropTypes = require('prop-types');
 
 const {Slide} = require('spectacle');
 const CodeSlideTitle = require('./CodeSlideTitle');
@@ -64,8 +64,8 @@ class CodeSlide extends React.Component {
   };
 
   static contextTypes = {
-    store: React.PropTypes.object.isRequired,
-    updateNotes: React.PropTypes.func
+    store: PropTypes.object.isRequired,
+    updateNotes: PropTypes.func
   };
 
   state = {
