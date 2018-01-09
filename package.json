@@ -1,6 +1,6 @@
 {
   "name": "spectacle-code-slide",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Present code with style.",
   "main": "lib/index.js",
   "scripts": {
