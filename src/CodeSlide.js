@@ -56,7 +56,8 @@ class CodeSlide extends React.Component {
       title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
       note: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
     })),
-    showLineNumbers: PropTypes.bool
+    showLineNumbers: PropTypes.bool,
+    titleStyle: PropTypes.object
   };
 
   static defaultProps = {
@@ -188,7 +189,7 @@ class CodeSlide extends React.Component {
   }
 
   render() {
-    const {code, lang, ranges, color, bgColor, notes, showLineNumbers, ...rest} = this.props;
+    const {code, lang, ranges, color, bgColor, notes, showLineNumbers, titleStyle, ...rest} = this.props;
     const {active} = this.state;
 
     const range = ranges[active] || {};
@@ -214,7 +215,7 @@ class CodeSlide extends React.Component {
 
     return (
       <Slide ref='slide' bgColor={slideBg} margin={1} {...rest}>
-        {range.title && <CodeSlideTitle>{range.title}</CodeSlideTitle>}
+        {range.title && <CodeSlideTitle style={titleStyle}>{range.title}</CodeSlideTitle>}
 
         <pre ref="container" style={newStyle}>
           <code style={{ display: "inline-block", textAlign: "left" }}>{lines}</code>

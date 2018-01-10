@@ -1,4 +1,5 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 
 const styles = {
   position: 'fixed',
@@ -14,9 +15,13 @@ const styles = {
 };
 
 class CodeSlideTitle extends React.Component {
+  static propTypes = {
+      style: PropTypes.object
+  }
+
   render() {
     return (
-      <h1 style={styles}>{this.props.children}</h1>
+      <h1 style={{ ...styles, ...this.props.style }}>{this.props.children}</h1>
     );
   }
 }
