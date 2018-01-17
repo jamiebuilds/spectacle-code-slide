@@ -56,6 +56,7 @@ class CodeSlide extends React.Component {
       title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
       note: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
     })),
+    id: PropTypes.string,
     showLineNumbers: PropTypes.bool
   };
 
@@ -106,7 +107,7 @@ class CodeSlide extends React.Component {
   }
 
   getStorageId() {
-    return 'code-slide:' + this.props.slideIndex;
+    return 'code-slide:' + (this.props.id || this.props.slideIndex);
   }
 
   getStorageItem() {
@@ -119,7 +120,7 @@ class CodeSlide extends React.Component {
 
   isSlideActive() {
     const slide = this.context.store.getState().route.slide;
-    return this.props.slideIndex === parseInt(slide);
+    return this.props.id === slide || this.props.slideIndex === parseInt(slide);
   }
 
   goTo(active, skipLocalStorage) {
