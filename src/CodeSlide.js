@@ -157,9 +157,9 @@ class CodeSlide extends React.Component {
     let prev = this.state.active;
     let active = null;
 
-    if ([keyEvents.LEFT, keyEvents.UP].includes(e.which)) {
+    if ([keyEvents.UP].includes(e.which)) {
       active = prev - 1;
-    } else if ([keyEvents.RIGHT, keyEvents.DOWN].includes(e.which)) {
+    } else if ([keyEvents.DOWN].includes(e.which)) {
       active = prev + 1;
     }
 
