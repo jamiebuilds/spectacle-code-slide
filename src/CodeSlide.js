@@ -13,6 +13,12 @@ const calculateScrollCenter = require('./calculateScrollCenter');
 const scrollToElement = require('./scrollToElement');
 const getComputedCodeStyle = require('./getComputedCodeStyle');
 
+const keyEvents = {
+  LEFT: 37,
+  RIGHT: 39,
+  UP: 38,
+  DOWN: 40,
+};
 function startOrEnd(index, loc) {
   if (index === loc[0]) {
     return 'start';
@@ -151,9 +157,9 @@ class CodeSlide extends React.Component {
     let prev = this.state.active;
     let active = null;
 
-    if (e.which === 38) {
+    if ([keyEvents.LEFT, keyEvents.UP].includes(e.which)) {
       active = prev - 1;
-    } else if (e.which === 40) {
+    } else if ([keyEvents.RIGHT, keyEvents.DOWN].includes(e.which)) {
       active = prev + 1;
     }
 
