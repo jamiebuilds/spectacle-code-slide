@@ -96,6 +96,7 @@ class CodeSlide extends React.Component {
   }
 
   componentWillUnmount() {
+    this.cleanStorageItem();
     document.removeEventListener('keydown', this.onKeyDown);
     window.removeEventListener('storage', this.onStorage);
     window.removeEventListener('resize', this.onResize);
@@ -119,6 +120,10 @@ class CodeSlide extends React.Component {
 
   getStorageItem() {
     return +localStorage.getItem(this.getStorageId());
+  }
+
+  cleanStorageItem() {
+    return +localStorage.removeItem(this.getStorageId());
   }
 
   setStorageItem(value) {
@@ -203,7 +208,6 @@ class CodeSlide extends React.Component {
     const loc = range.loc || [];
     const slideBg = bgColor || defaultBgColor;
 
-    console.log(this.props);
     const newStyle = {
       ...style,
       ...this.props.codeStyle,
