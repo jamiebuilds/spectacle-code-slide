@@ -8,7 +8,8 @@ const style = {
   background: 'black',
   color: 'white',
   fontFamily: 'monospace',
-  textAlign: 'left'
+  textAlign: 'left',
+  fontSize: '40px'
 };
 
 class CodeSlideNote extends React.Component {

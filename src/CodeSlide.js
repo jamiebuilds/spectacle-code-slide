@@ -13,6 +13,12 @@ const calculateScrollCenter = require('./calculateScrollCenter');
 const scrollToElement = require('./scrollToElement');
 const getComputedCodeStyle = require('./getComputedCodeStyle');
 
+const keyEvents = {
+  LEFT: 37,
+  RIGHT: 39,
+  UP: 38,
+  DOWN: 40,
+};
 function startOrEnd(index, loc) {
   if (index === loc[0]) {
     return 'start';
@@ -56,11 +62,15 @@ class CodeSlide extends React.Component {
       title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
       note: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
     })),
-    showLineNumbers: PropTypes.bool
+    showLineNumbers: PropTypes.bool,
+    shouldResetPos: PropTypes.bool,
+    codeStyle: PropTypes.object,
   };
 
   static defaultProps = {
-    showLineNumbers: true
+    showLineNumbers: true,
+    shouldResetPos: true,
+    codeStyle: {},
   };
 
   static contextTypes = {
@@ -88,6 +98,9 @@ class CodeSlide extends React.Component {
   }
 
   componentWillUnmount() {
+    if (this.props.shouldResetPos) {
+      this.cleanStorageItem();
+    }
     document.removeEventListener('keydown', this.onKeyDown);
     window.removeEventListener('storage', this.onStorage);
     window.removeEventListener('resize', this.onResize);
@@ -111,6 +124,10 @@ class CodeSlide extends React.Component {
 
   getStorageItem() {
     return +localStorage.getItem(this.getStorageId());
+  }
+
+  cleanStorageItem() {
+    return +localStorage.removeItem(this.getStorageId());
   }
 
   setStorageItem(value) {
@@ -151,9 +168,9 @@ class CodeSlide extends React.Component {
     let prev = this.state.active;
     let active = null;
 
-    if (e.which === 38) {
+    if ([keyEvents.UP].includes(e.which)) {
       active = prev - 1;
-    } else if (e.which === 40) {
+    } else if ([keyEvents.DOWN].includes(e.which)) {
       active = prev + 1;
     }
 
@@ -197,6 +214,7 @@ class CodeSlide extends React.Component {
 
     const newStyle = {
       ...style,
+      ...this.props.codeStyle,
       color: color || style.color,
     };
 
