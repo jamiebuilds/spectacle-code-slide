@@ -63,11 +63,13 @@ class CodeSlide extends React.Component {
       note: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
     })),
     showLineNumbers: PropTypes.bool,
+    shouldResetPos: PropTypes.bool,
     codeStyle: PropTypes.object,
   };
 
   static defaultProps = {
     showLineNumbers: true,
+    shouldResetPos: true,
     codeStyle: {},
   };
 
@@ -96,7 +98,9 @@ class CodeSlide extends React.Component {
   }
 
   componentWillUnmount() {
-    this.cleanStorageItem();
+    if (this.props.shouldResetPos) {
+      this.cleanStorageItem();
+    }
     document.removeEventListener('keydown', this.onKeyDown);
     window.removeEventListener('storage', this.onStorage);
     window.removeEventListener('resize', this.onResize);
