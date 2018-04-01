@@ -204,6 +204,7 @@ class CodeSlide extends React.Component {
     console.log(this.props);
     const newStyle = {
       ...style,
+      ...codeStyle,
       color: color || style.color,
     };
 
