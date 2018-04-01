@@ -62,11 +62,13 @@ class CodeSlide extends React.Component {
       title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
       note: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
     })),
-    showLineNumbers: PropTypes.bool
+    showLineNumbers: PropTypes.bool,
+    codeStyle: PropTypes.object,
   };
 
   static defaultProps = {
-    showLineNumbers: true
+    showLineNumbers: true,
+    codeStyle: {},
   };
 
   static contextTypes = {
