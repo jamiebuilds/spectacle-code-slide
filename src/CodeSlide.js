@@ -218,7 +218,7 @@ class CodeSlide extends React.Component {
         {range.title && <CodeSlideTitle>{range.title}</CodeSlideTitle>}
 
         <pre ref="container" style={newStyle}>
-          <code style={{ display: "inline-block", textAlign: "left" }}>{lines}</code>
+          <code style={{ display: "inline-block", textAlign: "left", width: '100%' }}>{lines}</code>
         </pre>
 
         {range.note && <CodeSlideNote>{range.note}</CodeSlideNote>}

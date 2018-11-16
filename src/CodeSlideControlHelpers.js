@@ -3,13 +3,12 @@ const React = require('react');
 const blinkAnimation = 'code-slide-control-helpers-blink';
 const shakeAnimation = 'code-slide-control-helpers-shake';
 
-const getContainerTransform = (extraTransform = '') => `translate(-100%, -50%) ${extraTransform}`
+const getContainerTransform = (extraTransform = '') => `translate(-100%, -100%) ${extraTransform}`
 
 const styles = {
   container: {
-    position: 'absolute',
-    top: '-80px',
-    left: '99%',
+    position: 'fixed',
+    bottom: '-15%',
     transform: getContainerTransform()
   },
   controlKey: {
@@ -38,53 +37,55 @@ class CodeSlideControlHelpers extends React.Component {
     const { hasNextRange, pristine } = this.props;
     return (
       <div style={{position: 'relative'}}>
-        <div 
-          style={{
-            ...styles.container, 
-            ...pristine ? styles.containerPristine : {}
-          }}
-        >
-          <style>{`
-            @keyframes ${blinkAnimation} {
-              0%, 35% {
-                opacity: 1;
-              }
-              50% {
-                opacity: 0.5;
-              }
-              65%, 100% {
-                opacity: 1;
-              }
-            }
-            @keyframes ${shakeAnimation} {
-              0%, 40% {
-                transform: ${getContainerTransform()};
-              }
-              45% {
-                transform: ${getContainerTransform('translateX(3px)')};
-              }
-              50% {
-                transform: ${getContainerTransform('translateX(-5px)')};
-              }
-              55% {
-                transform: ${getContainerTransform('translateX(4px)')};
-              }
-              60%, 100% {
-                transform: ${getContainerTransform()};
-              }
-            }
-          `}</style>
-          <div style={styles.controls}>
-            <div style={styles.controlKey}>
-              ↑
-            </div>
-            <div
+        <div style={{position: 'absolute', left: '99%'}}>
+          <div 
               style={{
-                ...styles.controlKey,
-                ...hasNextRange ? styles.controlKeyActive : {},
+                ...styles.container, 
+                ...pristine ? styles.containerPristine : {}
               }}
-            >
-              ↓
+          >
+            <style>{`
+              @keyframes ${blinkAnimation} {
+                0%, 35% {
+                  opacity: 1;
+                }
+                50% {
+                  opacity: 0.5;
+                }
+                65%, 100% {
+                  opacity: 1;
+                }
+              }
+              @keyframes ${shakeAnimation} {
+                0%, 40% {
+                  transform: ${getContainerTransform()};
+                }
+                45% {
+                  transform: ${getContainerTransform('translateX(3px)')};
+                }
+                50% {
+                  transform: ${getContainerTransform('translateX(-5px)')};
+                }
+                55% {
+                  transform: ${getContainerTransform('translateX(4px)')};
+                }
+                60%, 100% {
+                  transform: ${getContainerTransform()};
+                }
+              }
+            `}</style>
+            <div style={styles.controls}>
+              <div style={styles.controlKey}>
+                ↑
+              </div>
+              <div
+                style={{
+                  ...styles.controlKey,
+                  ...hasNextRange ? styles.controlKeyActive : {},
+                }}
+              >
+                ↓
+              </div>
             </div>
           </div>
         </div>
