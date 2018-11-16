@@ -5,6 +5,7 @@ const {Slide} = require('spectacle');
 const CodeSlideTitle = require('./CodeSlideTitle');
 const CodeSlideNote = require('./CodeSlideNote');
 const CodeSlideImage = require('./CodeSlideImage');
+const CodeSlideControlHelpers = require('./CodeSlideControlHelpers');
 
 const clamp = require('lodash.clamp');
 const padStart = require('lodash.padstart');
@@ -188,7 +189,7 @@ class CodeSlide extends React.Component {
   }
 
   render() {
-    const {code, lang, ranges, color, bgColor, notes, showLineNumbers, ...rest} = this.props;
+    const {code, lang, ranges, color, bgColor, notes, showLineNumbers, withControlHelpers, ...rest} = this.props;
     const {active} = this.state;
 
     const range = ranges[active] || {};
@@ -223,6 +224,8 @@ class CodeSlide extends React.Component {
         {range.note && <CodeSlideNote>{range.note}</CodeSlideNote>}
 
         {range.image && <CodeSlideImage src={range.image}/>}
+
+        {withControlHelpers && <CodeSlideControlHelpers hasNextRange={active < ranges.length - 1} pristine={active === 0} />}
       </Slide>
     );
   }
